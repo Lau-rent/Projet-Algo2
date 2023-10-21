@@ -8,7 +8,7 @@ int T1_4(int j, int l, int* s){
     for(int i = 0; i < l; i++){
         somme += s[i];
     }
-    
+
     if(l > 1){
         somme = somme+l-1;
     }
@@ -16,20 +16,12 @@ int T1_4(int j, int l, int* s){
     afficher(s, l);
     printf("L = %d, J = %d, Somme S = %d\n", l, j, somme);
 
-    if(somme == 0){
-        return 1;
-    }
-
-    if(somme -1 == j){
+    if(somme == 0 || somme -1 == j || somme -1 < j){
         return 1;
     }
 
     if(somme -1 > j){
         return 0;
-    }
-
-    if(somme -1 < j){
-        return 1;
     }
 
     return 2;
