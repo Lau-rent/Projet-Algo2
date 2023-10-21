@@ -3,8 +3,8 @@
 //T(j,l) pour la question 4, partie 1,1
 
 int T1_4(int j, int l, int* s){
+    afficher(j, l, s);
     if(l == 0){
-        afficher(j, l, s);
         return 1;
     }
 
@@ -12,24 +12,12 @@ int T1_4(int j, int l, int* s){
         if(j < s[l-1]){
             return 0;
         }
-        if(j == s[l-1]){
-            if(l-1 == 0){
-                afficher(j, l, s);
-                return T1_4(j-s[l], l-1, s);
+        if(j >= s[l-1]){
+            if(l == 1){
+                return T1_4(j-s[l-1], l-1, s);
             }
             else{
-                afficher(j, l, s);
-                return T1_4(j-s[l]-1, l-1, s);
-            }
-        }
-        if(j > s[l-1]){
-            if(l-1 == 0){
-                afficher(j, l, s);
-                return T1_4(j-s[l], l-1, s);
-            }
-            else{
-                afficher(j, l, s);
-                return T1_4(j-s[l]-1, l-1, s);
+                return T1_4(j-s[l-1]-1, l-1, s);
             }
         }
     }
