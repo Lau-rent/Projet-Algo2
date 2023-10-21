@@ -38,10 +38,10 @@ int T1_4(int j, int l, int* s){
 
 void afficher(int j, int l, int* s){
     printf("j = %d, l = %d, s = { ",j ,l );
-    for(int i = 0; i < l; i++){
-        printf("%d ", s[i]);
+    for(int i = 0; i < l - 1; i++){
+        printf("%d, ", s[i]);
     }
-    printf("}\n");
+    printf("%d }\n", s[l-1]);
 }
 
 void bool(int b){
