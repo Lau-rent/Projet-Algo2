@@ -10,6 +10,8 @@ int main(){
     bool(T1_4(2, 1, s));
     bool(T1_4(2, 2, s));
     bool(T1_4(2, 3, s));
+
+
     
     return 0;
 }

@@ -3,32 +3,41 @@
 //T(j,l) pour la question 4, partie 1,1
 
 int T1_4(int j, int l, int* s){
-    int somme = 0;
-
-    for(int i = 0; i < l; i++){
-        somme += s[i];
-    }
-
-    if(l > 1){
-        somme = somme+l-1;
-    }
-
-    afficher(s, l);
-    printf("L = %d, J = %d, Somme S = %d\n", l, j, somme);
-
-    if(somme == 0 || somme -1 == j || somme -1 < j){
+    if(l == 0){
+        afficher(j, l, s);
         return 1;
     }
 
-    if(somme -1 > j){
-        return 0;
+    if(l >= 1){
+        if(j < s[l-1]){
+            return 0;
+        }
+        if(j == s[l-1]){
+            if(l-1 == 0){
+                afficher(j, l, s);
+                return T1_4(j-s[l], l-1, s);
+            }
+            else{
+                afficher(j, l, s);
+                return T1_4(j-s[l]-1, l-1, s);
+            }
+        }
+        if(j > s[l-1]){
+            if(l-1 == 0){
+                afficher(j, l, s);
+                return T1_4(j-s[l], l-1, s);
+            }
+            else{
+                afficher(j, l, s);
+                return T1_4(j-s[l]-1, l-1, s);
+            }
+        }
     }
-
     return 2;
 }
 
-void afficher(int* s, int l){
-    printf("s = { ");
+void afficher(int j, int l, int* s){
+    printf("j = %d, l = %d, s = { ",j ,l );
     for(int i = 0; i < l; i++){
         printf("%d ", s[i]);
     }
