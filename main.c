@@ -18,14 +18,29 @@ int main(){
 
     bool(T1_4(3,1,s2));
 */
+    // printf("-1 = blanc, 0 = vide, 1 = noir\n\n");
+    // int s[2] = {3};
+    // int tab[5] = {0,1,0,1,0};
+    // bool(f2(4,1,s,tab));
 
-    int s[2] = {1,2};
-    int s1[1] = {8};
-    int tab[5] = {0,1,0,1,0};
-    bool(f2(4,1,s1,tab));
+    // int s1[4] = {3,-2};
+    // int tab1[6] = {1,0,1,0,1,-2};
+    // bool(f2(taille(tab1)-2,2,s1,tab1));
 
 
+    // afficherTab(tab1);
+    // afficherTab(copieTab(tab1));
+    // printf("taille = %d\n", taille(tab1));
+    // afficherTab(convertTab(tab1));
+    // bool(compareTab(s1,tab1));
+    
+    char* string = "1 0 1 0 1 2";
+    //int* tab = convertStringtoTab(string, 6);
+    //afficherTab(tab);
+    
 
+    int* tab = convertStringtoTab(string);
+    //afficherTab(convertStringtoTab(string));
     
     return 0;
 }
