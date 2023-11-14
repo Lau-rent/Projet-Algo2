@@ -128,66 +128,83 @@ int taille(int* tab){
     return size+1;
 }
 
+int nbLigne(char* file){
+    FILE *f;
+    char buffer[255];
+    f = fopen(file, "r");
+    int size = -1;
+    while (fgets(buffer, sizeof(buffer), f) != NULL){
+        size++;
+        if (buffer[0] == '#'){
+            break;
+        }
+    }
+
+    fclose(f);
+    return size;
+}
+
+int nbColonne(char* file){
+    FILE *f;
+    char buffer[255];
+    f = fopen(file, "r");
+    int size = 0;
+    while (fgets(buffer, sizeof(buffer), f) != NULL){
+        if (buffer[0] == '#'){
+            break;
+        }
+    }
+
+    while (fgets(buffer, sizeof(buffer), f) != NULL){
+        size++;
+    }
+
+    fclose(f);
+    return size;
+}
+
 // void coloration(char* file){
 //     FILE *f;
 //     char buffer[255];
 //     f = fopen(file, "r");
 //     int* tab;
 //     int size = -1;
-//     while (fgets(buffer, sizeof(buffer), f) != NULL) {
-//         size++;
-//         if (buffer[0] == '#') {
-//             break;
-//         }
-//     }
-//     fclose(f);
-//     printf("size = %d\n", size);
-//     FILE *f2;
-//     f2 = fopen(file, "r");
+// 
 //     int** tab = (int**)malloc(sizeof(int)*size*size);
-//     while (fgets(buffer, sizeof(buffer), f2) != NULL) {
+//     while (fgets(buffer, sizeof(buffer), f) != NULL) {
         
 //         printf("%s", buffer);
 //     }
 
-//     fclose(f2);
+//     fclose(f);
 // }
 
-// int* convertStringtoTab(char* string, int tailleTab){
+int* convertStringtoTab(char* string, int tailleTab){
 
-//     int size = 0;
-//     while(string[size] != '\0'){
-//         size++;
-//     }
-//     int* tab = malloc(sizeof(int)*tailleTab);
-//     int count = 0;
+    int* tab = (int*) malloc(sizeof(int)*(tailleTab+1));
 
-//     char* res = malloc(sizeof(char)*size);
-//     char tmp;
-//     char vide = ' ';
-//     for(int i=0; string[i] != '\0'; i++){
-//         printf("caract = %c\n", string[i]);
-//         tmp = string[i];
-//         if(strcmp(&tmp, &vide) != 0){
-//             res = strcat(res, &tmp);
-//             printf("%s\n", res);
-//         }
-//         if(strcmp(&tmp, &vide) == 0){
-//             tab[count] = atoi(res);
-//             count++;
-//             printf("reset\n");
-//             strcat(res, "");
-//         } 
-//     }
-//     return tab;
-// }
-
-
-int* convertStringtoTab(char* str) {
-    
-    while (strcmp(str, '\0') == 0) {
-        if (strcmp(str, " ") == 0) {
-            *str = '\0';
-        }
-        str++;
+    if (tab == NULL){
+        printf("Memory allocation failed.\n");
+        return NULL;
     }
+
+    char* str = strdup(string);
+    char *token;
+    int i = 0;
+
+    token = strtok(str, " ");
+    while( token != NULL ){
+        tab[i] = atoi(token);
+        i++;
+
+        token = strtok(NULL, " ");
+    }
+
+    tab[tailleTab] = -2; //sentinelle de fin de tableau
+    return tab;
+}
+
+
+ 
+
+

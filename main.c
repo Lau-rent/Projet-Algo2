@@ -28,18 +28,13 @@ int main(){
     // bool(f2(taille(tab1)-2,2,s1,tab1));
 
 
-    // afficherTab(tab1);
-    // afficherTab(copieTab(tab1));
-    // printf("taille = %d\n", taille(tab1));
-    // afficherTab(convertTab(tab1));
-    // bool(compareTab(s1,tab1));
     
-    char* string = "1 0 1 0 1 2";
-    //int* tab = convertStringtoTab(string, 6);
-    //afficherTab(tab);
+    char* string = "1 0 1 0 2 6 8";
+    int* tab = convertStringtoTab(string, 7);
+    afficherTab(tab);
     
 
-    int* tab = convertStringtoTab(string);
+    //int* tab = convertStringtoTab(string);
     //afficherTab(convertStringtoTab(string));
     
     return 0;
