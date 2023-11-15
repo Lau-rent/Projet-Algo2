@@ -5,7 +5,7 @@
 #include <string.h>
 
 //Partie 1,1
-int T1_4(int j, int l, int* s);
+int f1(int j, int l, int* s);
 void afficher(int j, int l, int *s);
 void bool(int b);
 
@@ -22,5 +22,6 @@ int nbLigne(char* file);
 int nbColonne(char* file);
 void coloration(char* file);
 int* convertStringtoTab(char* string, int size);
-
+void afficheMatrice(int** mat, int taille);
+void test2();
 #endif
