@@ -20,8 +20,13 @@ void afficherTab(int* tab);
 //Partie 1,3
 int nbLigne(char* file);
 int nbColonne(char* file);
-void coloration(char* file);
+int** coloration(char* file);
 int* convertStringtoTab(char* string, int size);
 void afficheMatrice(int** mat, int taille);
+void test(char * file);
 void test2();
+int est_coloriable(int i, int** mat, int taille, int *seq, int* liste);
+int listeEstVide(int* tab, int taille);
+int** creerMatrice(int nbLig, int nbCol);
+
 #endif

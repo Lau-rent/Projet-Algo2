@@ -1,5 +1,11 @@
 #include "fonction.h"
 
+
+void coloristp(int **mat, int i, int j, int couleur){
+  mat[i][j] = couleur;
+}
+
+
 int main(){
 
  /*
@@ -24,24 +30,22 @@ int main(){
     // int tab[5] = {0,1,0,1,0};
     // bool(f2(4,1,s,tab));
 
-    // int s1[4] = {3,-2};
-    // int tab1[6] = {1,0,1,0,1,-2};
-    // bool(f2(taille(tab1)-2,2,s1,tab1));
+     int s1[6] = {3,0,0,0,0,-2};
+     int tab1[6] = {1,0,0,0,0,-2};
+     bool(f2(taille(tab1)-2,2,s1,tab1));
 
-    printf("nbligne = %d\n", nbLigne("0.txt"));
-    printf("nbcolonne = %d\n", nbColonne("0.txt"));
 
-    
-    char* string = "1 0 ";
-    int* tab = convertStringtoTab(string, 7);
-    afficherTab(tab);
 
-  //  coloration("0.txt");
-  test2();
-    
+  
 
-    //int* tab = convertStringtoTab(string);
-    //afficherTab(convertStringtoTab(string));
+
+
+  int** matrice = coloration("0.txt");
+  afficheMatrice(matrice, 4);
+  
+  
+
+
     
     return 0;
 }

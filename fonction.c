@@ -49,7 +49,7 @@ void bool(int b){
 
 
 void afficherTab(int* tab){
-    printf("tab = [ ");
+    printf("[ ");
     int size = taille(tab);
     for(int i = 0; i < size-2; i++){
         printf("%d, ", tab[i]);
@@ -94,13 +94,19 @@ int compareTab(int* s, int* tab){
     int* convertedTab = convertTab(tab);
 
     for(int i = 0; i < size; i++){
+        if(s[i] == 0){
+            continue;
+        }
         if(s[i] != convertedTab[i]){
             return 0;
         }
     }
-    if(convertedTab[size] != 0){
-        return 0;
+    if(taille(convertedTab) < size){
+        if(convertedTab[size] != 0){
+            return 0;
+        }
     }
+    
     afficherTab(tab);
     return 1;
 }
@@ -175,7 +181,6 @@ int nbColonne(char* file){
 }
 
 int* convertStringtoTab(char* string, int tailleTab){
-
     int* tab = (int*) malloc(sizeof(int)*(tailleTab+1));
 
     if (tab == NULL){
@@ -184,7 +189,7 @@ int* convertStringtoTab(char* string, int tailleTab){
     }
 
     char* str = strdup(string);
-    char *token;
+    char* token;
     int i = 0;
 
     token = strtok(str, " ");
@@ -193,7 +198,6 @@ int* convertStringtoTab(char* string, int tailleTab){
         i++;
 
         token = strtok(NULL, " ");
-
     }
 
     free(str);
@@ -201,23 +205,25 @@ int* convertStringtoTab(char* string, int tailleTab){
     return tab;
 }
 
-void coloration(char* file){
+int** coloration(char* file){
     FILE *f;
     char buffer[255];
-    f = fopen(file, "r");
+    char* destination = malloc(sizeof(char)*25);
+    strcat(destination, "instances/");
+    strcat(destination, file);
+    f = fopen(destination, "r");
 
     int nbligne = nbLigne(file);
     int nbcol = nbColonne(file);
 
     int i = 0;
-    int** tabLigne = (int**)malloc(sizeof(int)*nbcol*nbligne);
+    int** tabLigne = (int**)malloc(sizeof(int*)*nbcol*nbligne);
     
     while (fgets(buffer, sizeof(buffer), f) != NULL) {
         if (buffer[0] == '#'){
             break;
         }
         tabLigne[i] = convertStringtoTab(buffer, nbcol);
-        afficherTab(convertStringtoTab(buffer, nbcol));
         i++;
     }
 
@@ -229,24 +235,64 @@ void coloration(char* file){
     }
 
     fclose(f);
-    int tabvideligne[nbligne][nbcol];
-    int res;
-    for(int i=0; i<nbligne;i++){
-        res = f2(nbcol,0,conv,tabvideligne[i]);
-        if(res == 0){
-            return;
+
+    int** matrice = creerMatrice(nbligne, nbcol);
+
+    int listeLigne[nbligne+1];
+    int listeCol[nbcol+1];
+    for(int i = 0; i < nbligne; i++){
+        listeLigne[i] = 1;
+    }
+    for(int i = 0; i < nbcol; i++){
+        listeCol[i] = 1;
+    }
+    listeLigne[nbligne] = -2;
+    listeCol[nbcol] = -2;
+
+    int boolL = 0;
+    int boolC = 0;
+    while(listeEstVide(listeLigne, nbligne) != 0 || listeEstVide(listeCol, nbcol) != 0){
+        for(int i = 0; i < nbligne; i++){
+            if(listeLigne[i] == 0){
+                break;
+            }
+            boolL = est_coloriable(i, matrice, nbcol, tabLigne[i], listeCol);
+            if(boolL == 0){
+                printf("faux\n");
+                return matrice;
+            }
         }
 
+        for(int i = 0; i < nbcol; i++){
+            if(listeCol[i] == 0){
+                break;
+            }
+            boolC = est_coloriable(i, matrice, nbcol, tabCol[i], listeLigne);
+            if(boolC == 0){
+                return matrice;
+            }
+        }
     }
 
+    afficheMatrice(matrice, nbligne);
+    return matrice;
+}
 
-
+int listeEstVide(int* liste, int taille){
+    int somme = 0;
+    for(int i=0; i<taille;i++){
+        somme++;
+    }
+    return somme;
 }
 
 void test(char* file){
     FILE *f;
     char buffer[255];
-    f = fopen(file, "r");
+    char* destination = malloc(sizeof(char)*25);
+    strcat(destination, "instances/");
+    strcat(destination, file);
+    f = fopen(destination, "r");
     
     int nbligne = nbLigne(file);
     int nbcol = nbColonne(file);
@@ -258,19 +304,24 @@ void test(char* file){
             break;
         }
         tabLigne[i] = convertStringtoTab(buffer, nbcol);
+        afficherTab(tabLigne[i]);
     }
 
     int** tabCol = (int**)malloc(sizeof(int)*nbcol*nbligne);
     while (fgets(buffer, sizeof(buffer), f) != NULL){
         tabCol[i] = convertStringtoTab(buffer, nbligne);
+        afficherTab(tabCol[i]);
     }
 
     fclose(f);
     
 }
  
-int** creerMatrice(int pos, int nbLig, int nbCol){
-    int **mat = (int**)malloc(sizeof(int*)*nbCol*nbLig);
+int** creerMatrice(int nbLig, int nbCol){
+    int **mat = (int**)malloc(sizeof(int*)*nbCol*nbLig+30);
+    for(int i = 0; i < nbLig; i++){
+        mat[i] = convertStringtoTab("0", nbCol);
+    }
     return mat;
 }
 
@@ -283,46 +334,36 @@ void afficheMatrice(int** mat, int taille){
     for(int i = 0; i < taille; i++){
         afficherTab(mat[i]);
     }
+    printf("\n");
 }
 
-void test2(){
 
-char chaine[] = "1 22\n3\n4";
-int tab[5][5];
-int index = 0;
-
-
-   char *token = strtok(chaine, "\n"); 
-    while (token != NULL && index < 20) {
-        char* espace = strchr(token, ' '); 
-        if (espace != NULL) {
-            *espace = '\0'; 
-
-            tab[index][0] = atoi(token); 
-            tab[index][1] = atoi(espace + 1); 
-        } else {
-            tab[index][0] = atoi(token); 
-            tab[index][1] = 0; 
+int est_coloriable(int i, int** mat, int taille, int *seq, int* liste){
+    mat[i][taille] = -2; 
+    afficherTab(seq);
+    afficherTab(mat[i]);
+    bool(f2(taille-1, 0, seq, mat[i]));
+    for(int j = 0; j < taille; j++){
+        mat[i][j] = -1;
+        int boolB = f2(taille-1, 0, seq, mat[i]);
+        mat[i][j] = 1;
+        int boolN = f2(taille-1, 0, seq, mat[i]);
+        printf("boolB = %d, boolN = %d\n", boolB, boolN);
+        bool(f2(taille-1, 0, seq, mat[i]));
+        if(boolN == 1 && boolB == 0){
+            mat[i][j] = 1;
+            liste[j] = 1;
         }
-        index++;
-        token = strtok(NULL, "\n");
-        tab[index][4] = -2;
-    }
-printf("Tableau de tableaux d'entiers :\n");
-    for (int i = 0; i < index; i++) {
-        if (tab[i][1] != 0) {
-            printf("{%d,%d}", tab[i][0], tab[i][1]);
-        } else {
-            printf("{%d}", tab[i][0]);
+        if(boolN == 1 && boolB == 1){
+            mat[i][j] = 0;
         }
-        afficherTab(tab[i]);
+        if(boolN == 0 && boolB == 1){
+            mat[i][j] = -1;
+            liste[j] = 1;
+        }
+        if(boolN == 0 && boolB == 0){
+            return 0;
+        }
     }
-
-printf("\n");
-}
-
-int est_coloriable(int i, int j, int** mat){
-    if(mat[i][j] == 0){
-        
-    }
+    return 1;
 }
