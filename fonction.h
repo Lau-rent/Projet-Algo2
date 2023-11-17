@@ -23,11 +23,12 @@ int nbLigne(char* file);
 int nbColonne(char* file);
 int** coloration(char* file);
 int* convertStringtoTab(char* string, int size);
-void afficheMatrice(int** mat, int taille);
+void afficheMatrice(int** mat, int nbLigne );
 void test(char * file);
 void test2();
-int est_coloriable(int i, int** mat, int taille, int *seq, int* liste);
-int listeEstVide(int* tab, int taille);
+int est_coloriable_ligne(int i, int** mat, int taille, int *seq, int* liste);
+int sommeListe(int* tab, int taille);
+int est_coloriable_colonne(int i, int** mat, int taille, int *seq, int* liste);
 int** creerMatrice(int nbLig, int nbCol);
 
 #endif
