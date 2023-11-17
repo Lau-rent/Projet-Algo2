@@ -10,6 +10,7 @@ void afficher(int j, int l, int *s);
 void bool(int b);
 
 //Partie 1,2
+int sommeTab(int* tab);
 int* convertTab(int *tab);
 int compareTab(int* s, int* tab);
 int* copieTab( int* tab);

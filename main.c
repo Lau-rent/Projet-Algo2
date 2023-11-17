@@ -24,9 +24,9 @@ int main(){
 	// int tab[5] = {0,1,0,1,0};
 	// bool(f2(4,1,s,tab));
 
-	// int s1[6] = {3,0,0,0,0,-2};
-	// int tab1[6] = {1,0,0,0,0,-2};
-	// bool(f2(taille(tab1)-2,2,s1,tab1));
+	int s1[6] = {3,0,0,0,0,-2};
+	int tab1[6] = {1,0,0,0,0,-2};
+	bool(f2(taille(tab1)-2,2,s1,tab1));
 
 
 

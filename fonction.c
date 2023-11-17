@@ -93,22 +93,32 @@ int compareTab(int* s, int* tab){
     int size = taille(s)-1;
     int* convertedTab = convertTab(tab);
 
+    if(sommeTab(convertedTab) != sommeTab(s)){
+            return 0;
+        }
+
     for(int i = 0; i < size; i++){
         if(s[i] == 0){
             continue;
+        }
+        if(s[i] == -2){
+            break;
         }
         if(s[i] != convertedTab[i]){
             return 0;
         }
     }
-    if(taille(convertedTab)-1  < size){
-        if(convertedTab[size] != 0){
-            return 0;
-        }
-    }
     
-    //afficherTab(tab);
     return 1;
+}
+
+int sommeTab(int* tab){
+    int size = taille(tab);
+    int somme = 0;
+    for(int i = 0; i < size-1; i++){
+        somme += tab[i];
+    }
+    return somme;
 }
 
 int* convertTab(int* tab){
@@ -259,6 +269,7 @@ int** coloration(char* file){
                 break;
             }
             boolL = est_coloriable(i, matrice, nbcol, tabLigne[i], listeCol);
+            listeLigne[i] = 0;
             if(boolL == 0){
                 printf("Impossible Ligne %d\n", i);
                 return matrice;
@@ -270,8 +281,8 @@ int** coloration(char* file){
                 break;
             }
             boolC = est_coloriable(i, matrice, nbcol, tabCol[i], listeLigne);
+            listeCol[i] = 0;
             if(boolC == 0){
-                afficherTab(listeCol);
                 printf("Impossible Colonne %d\n", i);
                 return matrice;
             }
