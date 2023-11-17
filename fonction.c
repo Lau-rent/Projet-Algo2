@@ -101,13 +101,13 @@ int compareTab(int* s, int* tab){
             return 0;
         }
     }
-    if(taille(convertedTab) < size){
+    if(taille(convertedTab)-1  < size){
         if(convertedTab[size] != 0){
             return 0;
         }
     }
     
-    afficherTab(tab);
+    //afficherTab(tab);
     return 1;
 }
 
@@ -219,6 +219,7 @@ int** coloration(char* file){
     int i = 0;
     int** tabLigne = (int**)malloc(sizeof(int*)*nbcol*nbligne);
     
+    //On récupère les lignes
     while (fgets(buffer, sizeof(buffer), f) != NULL) {
         if (buffer[0] == '#'){
             break;
@@ -227,6 +228,7 @@ int** coloration(char* file){
         i++;
     }
 
+    //On récupère les colonnes
     i = 0;
     int** tabCol = (int**)malloc(sizeof(int)*nbcol*nbligne);
     while (fgets(buffer, sizeof(buffer), f) != NULL){
@@ -249,8 +251,8 @@ int** coloration(char* file){
     listeLigne[nbligne] = -2;
     listeCol[nbcol] = -2;
 
-    int boolL = 0;
-    int boolC = 0;
+    int boolL, boolC;
+
     while(listeEstVide(listeLigne, nbligne) != 0 || listeEstVide(listeCol, nbcol) != 0){
         for(int i = 0; i < nbligne; i++){
             if(listeLigne[i] == 0){
@@ -258,7 +260,7 @@ int** coloration(char* file){
             }
             boolL = est_coloriable(i, matrice, nbcol, tabLigne[i], listeCol);
             if(boolL == 0){
-                printf("faux\n");
+                printf("Impossible Ligne %d\n", i);
                 return matrice;
             }
         }
@@ -269,12 +271,12 @@ int** coloration(char* file){
             }
             boolC = est_coloriable(i, matrice, nbcol, tabCol[i], listeLigne);
             if(boolC == 0){
+                afficherTab(listeCol);
+                printf("Impossible Colonne %d\n", i);
                 return matrice;
             }
         }
     }
-
-    afficheMatrice(matrice, nbligne);
     return matrice;
 }
 
@@ -304,17 +306,14 @@ void test(char* file){
             break;
         }
         tabLigne[i] = convertStringtoTab(buffer, nbcol);
-        afficherTab(tabLigne[i]);
     }
 
     int** tabCol = (int**)malloc(sizeof(int)*nbcol*nbligne);
     while (fgets(buffer, sizeof(buffer), f) != NULL){
         tabCol[i] = convertStringtoTab(buffer, nbligne);
-        afficherTab(tabCol[i]);
     }
 
     fclose(f);
-    
 }
  
 int** creerMatrice(int nbLig, int nbCol){
@@ -325,11 +324,6 @@ int** creerMatrice(int nbLig, int nbCol){
     return mat;
 }
 
-void matAjout(int** mat, int* tab, int pos){
-    mat[pos] = tab;
-}
-
-
 void afficheMatrice(int** mat, int taille){
     for(int i = 0; i < taille; i++){
         afficherTab(mat[i]);
@@ -337,29 +331,23 @@ void afficheMatrice(int** mat, int taille){
     printf("\n");
 }
 
-
 int est_coloriable(int i, int** mat, int taille, int *seq, int* liste){
     mat[i][taille] = -2; 
-    afficherTab(seq);
-    afficherTab(mat[i]);
-    bool(f2(taille-1, 0, seq, mat[i]));
     for(int j = 0; j < taille; j++){
         mat[i][j] = -1;
         int boolB = f2(taille-1, 0, seq, mat[i]);
         mat[i][j] = 1;
         int boolN = f2(taille-1, 0, seq, mat[i]);
-        printf("boolB = %d, boolN = %d\n", boolB, boolN);
-        bool(f2(taille-1, 0, seq, mat[i]));
         if(boolN == 1 && boolB == 0){
             mat[i][j] = 1;
             liste[j] = 1;
         }
-        if(boolN == 1 && boolB == 1){
-            mat[i][j] = 0;
-        }
         if(boolN == 0 && boolB == 1){
             mat[i][j] = -1;
             liste[j] = 1;
+        }
+        if(boolN == 1 && boolB == 1){
+            mat[i][j] = 0;
         }
         if(boolN == 0 && boolB == 0){
             return 0;
