@@ -34,8 +34,9 @@ int main(){
 
 
 
-	afficheMatrice(coloration("0.txt"), 4);
-//	afficheMatrice(coloration("1.txt"), 5);
+//	afficheMatrice(coloration("0.txt"), 4);
+	coloration("1.txt");
+	coloration("2.txt");
 
 
 

@@ -243,9 +243,6 @@ int** coloration(char* file){
 
     fclose(f);
 
-    afficheMatrice(tabLigne, nbligne);
-    afficheMatrice(tabCol, nbligne);
-
     int** matrice = creerMatrice(nbligne, nbcol);
 
     int listeLigne[nbligne+1];
@@ -263,41 +260,33 @@ int** coloration(char* file){
 
     int boolL, boolC;
 
-        while(sommeListe(listeLigne, nbligne) != 0 || sommeListe(listeCol, nbcol) != 0){
-  //  for(int b = 0; b < 6; b++){
+    while(sommeListe(listeLigne, nbligne) != 0 || sommeListe(listeCol, nbcol) != 0){
         for(int i = 0; i < nbligne; i++){
             if(listeLigne[i] == 0){
                 continue;
             }
             boolL = est_coloriable_ligne(i, matrice, nbcol, tabLigne[i], listeCol);
-          //  if(boolC == 1){
-               listeLigne[i] = 0; 
-         //   }
+            listeLigne[i] = 0; 
             
             if(boolL == 0){
                 printf("Impossible Ligne %d\n", i);
                 return matrice;
             }
         }
-        afficherTab(listeLigne);
         for(int i = 0; i < nbcol; i++){
             if(listeCol[i] == 0){
                 continue;
             }
-
             boolC = est_coloriable_colonne(i, matrice, nbligne, tabCol[i], listeLigne);
-          //  if(boolC == 1){
-                listeCol[i] = 0;
-         //   }
+            listeCol[i] = 0;
        
             if(boolC == 0){
                 printf("Impossible Colonne %d\n", i);
                 return matrice;
             }
         }
-        afficherTab(listeCol);
-        printf("%d, %d", sommeListe(listeLigne, nbcol), sommeListe(listeCol, nbligne));
     }
+    afficheMatrice(matrice, nbligne);
     return matrice;
 }
 
@@ -354,6 +343,9 @@ void afficheMatrice(int** mat, int taille){
 
 int est_coloriable_ligne(int i, int** mat, int taille, int *seq, int* liste){
     for(int j = 0; j < taille; j++){
+        if(mat[i][j] == -1 || mat[i][j] == 1 ){
+            continue;
+        }
         mat[i][j] = -1;
         int boolB = f2(taille-1, 0, seq, mat[i]);
         
