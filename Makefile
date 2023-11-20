@@ -1,8 +1,8 @@
 fonction.o: fonction.c fonction.h
-	clang -Wall -c fonction.c
+	clang -g -Wall -c fonction.c
 
 main: main.c fonction.o
-	clang -Wall -o main fonction.o main.c
+	clang -g -Wall -o main fonction.o main.c
 
 clean:
 	rm -f *.o main
