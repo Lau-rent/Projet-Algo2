@@ -24,9 +24,20 @@ int main(){
 	// int tab[5] = {0,1,0,1,0};
 	// bool(f2(4,1,s,tab));
 
-	// int s1[6] = {3,0,0,0,0,-2};
-	// int tab1[6] = {0,0,0,-1,0,-2};
-	// bool(f2(taille(tab1)-2,2,s1,tab1));
+	// int s1[6] = {1,1,1,-2};
+	// int* tab1 = malloc(sizeof(int)*6);
+	// tab1[0] = 0;
+	// tab1[1] = 1;
+	// tab1[2] = 0;
+	// tab1[3] = 1;
+	// tab1[4] = 0;
+	// tab1[5] = -2;
+
+	// bool(f3(taille(tab1)-2,taille(tab1)-2,s1,tab1));
+	int s2[2] = {1,2};
+	int tab2[5] = {1,1,1,-1,0};
+	bool(f2(4,2,s2,tab2));
+	bool(f3(3,2,s2,tab2));
 
 
 
@@ -35,12 +46,11 @@ int main(){
 
 
 //	afficheMatrice(coloration("0.txt"), 4);
-	coloration("1.txt");
-	coloration("2.txt");
-
-
-
-
-
+	// int taille = nbLigne("1.txt");
+	// int** matrice = coloration("1.txt");
+	// freeMatrice(matrice, taille);
+	// coloration("0.txt");
+	// coloration("2.txt");
+	
 	return 0;
 }
